@@ -1,0 +1,180 @@
+﻿@model TesteWebAPI.Services.Models.Cotacao
+<style>
+       .modal {
+  text-align: center;
+}
+
+@@media screen and (min-width: 768px) {
+  .modal:before {
+    display: inline-block;
+    vertical-align: middle;
+    content: " ";
+    height: 100%;
+  }
+}
+
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
+</style>
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" style="width: 200px;" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <center> 
+                <i class="fa fa-spinner fa-spin fa-5x fa-fw"></i>
+                <h3>AGUARDE PROCESSANDO</h3></center>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="jumbotron">
+    <h1>DESAFIO CÁLCULO SEGUROS</h1>
+</div>
+<div class="panel panel-success">
+    <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-user"></i>&ensp;PREZADO CORRETOR PREENCHA OS DADOS E CLIQUE EM CALCULAR PARA OBTER A COTAÇÃO</h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-xs-8">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.nome, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.nome, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.nome, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.nascimento, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.nascimento, new { htmlAttributes = new { @class = "form-control DatePickerAttr" } })
+                            @Html.ValidationMessageFor(model => model.nascimento, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.endereco.logradouro, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.endereco.logradouro, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.endereco.logradouro, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.endereco.bairro, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.endereco.bairro, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.endereco.bairro, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.endereco.cep, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.endereco.cep, new { htmlAttributes = new { @class = "form-control cep" } })
+                            @Html.ValidationMessageFor(model => model.endereco.cep, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.endereco.cidade, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.endereco.cidade, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.endereco.cidade, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="Coberturas">Coberturas</label>
+                        <div class="col-md-10">
+                            <select class="chosen form-control" style="width:280px;" name="coberturas" id="coberturas" multiple="multiple">
+                                @foreach (var coberturas in TesteWebAPI.Services.Models.Dados.ObterCoberturas().ToList())
+                                {
+                                    <option value="@coberturas.Id">@coberturas.Nome</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <button type="button" class="btn btn-success">
+                                <span class="glyphicon glyphicon-usd" aria-hidden="true"></span>&ensp;
+                                OBTER COTAÇÃO
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-4 resultado">
+                <table class="table table-bordered table-condensed table-hover table-responsive table-striped">
+                    <tbody><tr><th>Prêmio</th><td>R$&nbsp;</td></tr><tr><th>Parcelas</th><td></td></tr><tr><th>Valor Parcela</th><td>R$&nbsp;</td></tr><tr><th>Primeiro Vencimento</th><td></td></tr><tr><th>Cobertura Total</th><td>R$&nbsp;</td></tr></tbody>
+                </table>
+
+            </div>
+        </div>
+
+
+    </div>
+</div>
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+<script type="text/javascript">
+    $(".chosen").chosen({
+        no_results_text: "NENHUMA COBERTURA ENCONTRADA",
+        placeholder_text_multiple: "CLIQUE PARA INSERIR AS COBERTURAS DESEJADAS",
+    });
+    $(".DatePickerAttr").inputmask("99/99/9999");
+    $(".cep").inputmask("99999-999");
+    //=============================================================//
+    $(".btn").click(function () {
+        $('#myModal').modal({ backdrop: 'static', keyboard: false })  
+        $('.alert').remove();
+        var coberturasarray = $('#coberturas').val();
+        coberturasarray = coberturasarray.map(function (x) {
+            return parseInt(x, 10);
+        });
+        console.log(coberturasarray)
+        //coberturasarray = coberturasarray.split(',').map(Number);
+        var Cotacao =
+        {
+            'nome': $('#nome').val(),
+            'nascimento': $('#nascimento').val(),
+            'endereco': {
+                'logradouro': $('#endereco_logradouro').val(),
+                'bairro': $('#endereco_bairro').val(),
+                'cep': $('#endereco_cep').val(),
+                'cidade': $('#endereco_cidade').val(),
+            },
+            'coberturas':
+                $('#coberturas').val(),
+
+        };
+        var html = "<tbody><tr><th>Prêmio</th><td>R$&nbsp;Calculando...</td></tr><tr><th>Parcelas</th><td>Calculando...</td></tr><tr><th>Valor Parcela</th><td>R$&nbsp;Calculando...</td></tr><tr><th>Primeiro Vencimento</th><td>Calculando...</td></tr><tr><th>Cobertura Total</th><td>R$&nbsp;Calculando...</td></tr></tbody>";
+        $('.table > tbody').html(html);
+        $.ajax({
+            url: 'http://localhost:8002/api/price',
+            dataType: 'json',
+            contentType: 'application/json',
+            type: 'POST',
+            data: JSON.stringify(Cotacao),
+            success: function (data) {
+                console.log(data);
+                html = '<tr><th>Prêmio</th><td>' + data.Premio.toLocaleString("pt-BR", { style: "currency", currency: "BRL" }); + '</td></tr>';
+                html += '<tr><th>Parcelas</th><td>' + data.Parcelas + '</td></tr>';
+                html += '<tr><th>Valor Parcela</th><td>' + data.ValorParcela.toLocaleString("pt-BR", { style: "currency", currency: "BRL" }); + '</td></tr>';
+                html += '<tr><th>Primeiro Vencimento</th><td>' + data.PrimeiroVencimento.substr(0, 10).split('-').reverse().join('/') + '</td></tr>';
+                html += '<tr><th>Cobertura Total</th><td>' + data.CoberturaTotal.toLocaleString("pt-BR", { style: "currency", currency: "BRL" }); + '</td></tr>';
+                $('.table > tbody').html(html);
+                $("#myModal").modal('hide');
+            },
+            error: function (xhr, status, error) {
+                console.log(xhr.responseText);
+                var json = JSON.parse(xhr.responseText);
+                $('.resultado').append('<div class="alert alert-danger" role="alert">' + json.Message + '</div>')
+                $("#myModal").modal('hide');
+            }
+        });
+
+
+    })
+</script>

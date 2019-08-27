@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.757
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TesteWebAPI.Services", "TesteWebAPI.Services\TesteWebAPI.Services.csproj", "{FD769A99-49F5-4153-BE17-F6F0817F876D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GridMvc", "..\GridMvc\GridMvc.csproj", "{742CA5DD-16DB-464A-A267-A1F4E422733B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FD769A99-49F5-4153-BE17-F6F0817F876D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD769A99-49F5-4153-BE17-F6F0817F876D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD769A99-49F5-4153-BE17-F6F0817F876D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD769A99-49F5-4153-BE17-F6F0817F876D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{742CA5DD-16DB-464A-A267-A1F4E422733B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{742CA5DD-16DB-464A-A267-A1F4E422733B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{742CA5DD-16DB-464A-A267-A1F4E422733B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{742CA5DD-16DB-464A-A267-A1F4E422733B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {262F52B0-C385-4076-BFDF-694BC88288C9}
+	EndGlobalSection
+EndGlobal
